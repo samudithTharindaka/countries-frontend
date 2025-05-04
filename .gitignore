@@ -26,7 +26,7 @@ Thumbs.db
 
 # Tailwind CSS
 #tailwind.config.js
-postcss.config.js
+#postcss.config.js
 
 # Build artifacts
 *.cache
