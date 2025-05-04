@@ -11,10 +11,21 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "/"
     },{
-
+      "src": "/home",
+      "dest": "/"
+    },
+    {
+      "src": "/main",
+      "dest": "/"
     }
+    ,
+    {
+      "src": "/countries",
+      "dest": "/"
+    }
+  
   ]
 }
