@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Menu from './Menu';
 import SortOptions from './SortOption';
 import Card from './Card';
@@ -26,36 +26,40 @@ const Home = () => {
     setSearchQuery('');  // Reset search query when search type changes
   };
 
-  // Filter countries based on search type and query
-  const filteredCountries = countries.filter((country) => {
-    if (searchType === 'name') {
-      return country.name.toLowerCase().includes(searchQuery.toLowerCase());
-    }
-    if (searchType === 'region') {
-      return country.region.toLowerCase().includes(searchQuery.toLowerCase());
-    }
-    if (searchType === 'capital') {
-      return country.capital && country.capital[0].toLowerCase().includes(searchQuery.toLowerCase());
-    }
-    return false;
-  });
+  // Memoize filtered countries based on search query and type
+  const filteredCountries = useMemo(() => {
+    return countries.filter((country) => {
+      if (searchType === 'name') {
+        return country.name.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      if (searchType === 'region') {
+        return country.region.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      if (searchType === 'capital') {
+        return country.capital && country.capital[0].toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      return false;
+    });
+  }, [countries, searchQuery, searchType]);  // Recompute when countries, searchQuery, or searchType change
 
-  // Sort countries based on the selected option (name, population, region, or capital)
-  const sortedCountries = [...filteredCountries].sort((a, b) => {
-    if (sortBy === 'name') {
-      return a.name.localeCompare(b.name);  // Sort alphabetically by name
-    }
-    if (sortBy === 'population') {
-      return a.population - b.population;  // Sort by population (ascending)
-    }
-    if (sortBy === 'region') {
-      return a.region.localeCompare(b.region);  // Sort alphabetically by region
-    }
-    if (sortBy === 'capital') {
-      return a.capital.localeCompare(b.capital);  // Sort alphabetically by capital
-    }
-    return 0; // Default return if no sort option matches
-  });
+  // Memoize sorted countries based on sort option
+  const sortedCountries = useMemo(() => {
+    return [...filteredCountries].sort((a, b) => {
+      if (sortBy === 'name') {
+        return a.name.localeCompare(b.name);  // Sort alphabetically by name
+      }
+      if (sortBy === 'population') {
+        return a.population - b.population;  // Sort by population (ascending)
+      }
+      if (sortBy === 'region') {
+        return a.region.localeCompare(b.region);  // Sort alphabetically by region
+      }
+      if (sortBy === 'capital') {
+        return a.capital.localeCompare(b.capital);  // Sort alphabetically by capital
+      }
+      return 0; // Default return if no sort option matches
+    });
+  }, [filteredCountries, sortBy]);  // Recompute when filteredCountries or sortBy changes
 
   if (loading) {
     return <div>Loading...</div>;

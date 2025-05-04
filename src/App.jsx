@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./pages/LoadingScreen";
 import MainPage from "./pages/MainPage";
 import Home from "./components/Home";
+import CountryDetails from "./pages/CountryDetails";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<LoadingScreen />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/country/:code" element={<CountryDetails />} />
       </Routes>
     </AnimatePresence>
   );
