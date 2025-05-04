@@ -12,6 +12,7 @@ export const useCountries = () => {
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
+        console.log(data); // Log the raw data for debugging
 
         // Map the data into the format we need
         const formattedData = data.map((country) => ({
@@ -20,6 +21,7 @@ export const useCountries = () => {
           population: country.population || 'N/A',
           region: country.region || 'N/A',
           flag: country.flags.png,
+          code: country.ccn3,
         }));
 
         setCountries(formattedData);
